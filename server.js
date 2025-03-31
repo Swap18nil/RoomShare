@@ -12,5 +12,8 @@ app.use(express.json());
 app.post("/register", authController.register);
 app.post("/login", authController.login);
 app.get("/rooms", authenticateToken, roomController.getRooms);
+app.post("/rooms",roomController.addRoom)
+app.delete("/rooms/:id",roomController.deleteRoom)
+app.put("/rooms/:id",roomController.updateRoom)
 
 app.listen(3000, () => console.log("Server running on http://localhost:3000"));
