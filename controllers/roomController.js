@@ -3,7 +3,8 @@ const roomService = require("../services/roomService");
 const getRooms = async (req, res) => {
     try {
         const rooms = await roomService.getAllRooms();
-        res.json(rooms);
+        res.set('Cache-Control', 'no-store'); // This header tells the browser not to cache the response.
+        res.status(200).json(rooms);
     } catch (error) {
         res.status(500).json({ message: "Error fetching rooms", error: error.message });
     }
@@ -47,4 +48,37 @@ const updateRoom = async (req, res) => {
     }
 };
 
-module.exports = { getRooms, addRoom, deleteRoom, updateRoom };
+const getOwnerPost = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const rooms = await roomService.getOwnerPost(userId);
+        res.set('Cache-Control', 'no-store'); // This header tells the browser not to cache the response.
+        res.status(200).json(rooms);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching rooms", error: error.message });
+    }
+};
+
+const getAllBookings = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const rooms = await roomService.getAllBookings(userId);
+        res.set('Cache-Control', 'no-store'); // This header tells the browser not to cache the response.
+        res.status(200).json(rooms);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching rooms", error: error.message });
+    }
+};
+
+const getBookingRequests = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const rooms = await roomService.getBookingRequests(userId);
+        res.set('Cache-Control', 'no-store'); // This header tells the browser not to cache the response.
+        res.status(200).json(rooms);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching rooms", error: error.message });
+    }
+};
+
+module.exports = { getRooms, addRoom, deleteRoom, updateRoom,getOwnerPost,getAllBookings, getBookingRequests };

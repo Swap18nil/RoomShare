@@ -19,4 +19,16 @@ const updateRoom = async (id, title, description,address, city, type, price, pre
     return { message: "Room updated Succesfully" };
 }
 
-module.exports = { getAllRooms, addRoom, deleteRoom, updateRoom };
+const getOwnerPost = async (userId) =>{
+    return await roomRepository.getOwnerPost(userId);
+}
+
+const getAllBookings = async (userId) =>{
+    return await roomRepository.getAllBookings(userId);
+}
+
+const getBookingRequests = async (userId) =>{
+    return await roomRepository.getBookingRequests(userId);
+}
+
+module.exports = { getAllRooms, addRoom, deleteRoom, updateRoom, getOwnerPost, getAllBookings, getBookingRequests };

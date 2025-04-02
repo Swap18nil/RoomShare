@@ -43,3 +43,17 @@ module.exports = promisePool;
 //     images JSON,  
 //     userId INT
 // );
+
+//  TO Create bookings table
+// CREATE TABLE bookings (
+//     bookingId INT AUTO_INCREMENT PRIMARY KEY,
+//     userId INT NOT NULL,
+//     roomId INT NOT NULL,
+//     fullName VARCHAR(255) NOT NULL,
+//     emailAddress VARCHAR(255) NOT NULL,
+//     phoneNumber VARCHAR(20) NOT NULL,
+//     specialRequests TEXT,
+//     bookingDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+//     FOREIGN KEY (roomId) REFERENCES rooms(id) ON DELETE CASCADE
+// );

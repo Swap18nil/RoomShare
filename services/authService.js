@@ -19,7 +19,7 @@ const loginUser = async (email, password) => {
         throw new Error("Invalid credentials");
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, "your_jwt_secret", { expiresIn: "1h" });
+    const token = jwt.sign({ id: user.id, email: user.email }, "abc", { expiresIn: "1h" });
     return { token, id: user.id, message: "Login successful" };
 };
 
