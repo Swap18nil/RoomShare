@@ -4,8 +4,8 @@ const getAllRooms = async () => {
     return await roomRepository.getAllRooms();
 };
 
-const addRoom = async (id, title, description,address, city, type, price, preference,ber, images,userId) =>{
-    await roomRepository.addRoom(id,title, description,address, city, type, price, preference,ber, images,userId);
+const addRoom = async ( title, description,address, city, type, price, preference,ber, images,userId) =>{
+    await roomRepository.addRoom(title, description,address, city, type, price, preference,ber, images,1);
     return { message: "Room Added Succesfully" };
 }
 
@@ -23,6 +23,14 @@ const getOwnerPost = async (userId) =>{
     return await roomRepository.getOwnerPost(userId);
 }
 
+const addBooking = async ( userId, roomId, fullName, emailAddress, phoneNumber, specialRequests) =>{
+    return await roomRepository.addBooking( userId, roomId, fullName, emailAddress, phoneNumber, specialRequests);
+}
+
+const removeBooking = async (bookingId) =>{
+    await roomRepository.removeBooking(bookingId);
+    return { message: "Booking Removed Succesfully" };
+}
 const getAllBookings = async (userId) =>{
     return await roomRepository.getAllBookings(userId);
 }
@@ -31,4 +39,4 @@ const getBookingRequests = async (userId) =>{
     return await roomRepository.getBookingRequests(userId);
 }
 
-module.exports = { getAllRooms, addRoom, deleteRoom, updateRoom, getOwnerPost, getAllBookings, getBookingRequests };
+module.exports = { getAllRooms, addRoom, deleteRoom, updateRoom, getOwnerPost, getAllBookings, getBookingRequests,addBooking,removeBooking };

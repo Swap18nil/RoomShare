@@ -16,7 +16,9 @@ app.post("/rooms",roomController.addRoom)
 app.delete("/rooms/:id",roomController.deleteRoom)
 app.put("/rooms/:id",roomController.updateRoom)
 app.get("/ownerPost/:userId",roomController.getOwnerPost)
+app.post("/bookings",roomController.addBooking)
 app.get("/bookings/:userId",roomController.getAllBookings)
+app.delete("/bookings/:bookingId",roomController.removeBooking)
 app.get("/bookingRequests/:userId",roomController.getBookingRequests)
 
 app.listen(3000, () => console.log("Server running on http://localhost:3000"));

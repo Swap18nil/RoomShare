@@ -46,9 +46,40 @@ const getOwnerPost = async ( userId ) => {
     return rooms;
 };
 
+const addBooking = async ( userId, roomId, fullName, emailAddress, phoneNumber, specialRequests) =>{
+    await db.query(
+        "INSERT INTO bookings (userId, roomId, fullName, emailAddress, phoneNumber, specialRequests) VALUES (?, ?, ?, ?, ?, ?)", 
+        [userId, roomId, fullName, emailAddress, phoneNumber, specialRequests]
+    );
+
+}
+
 const getAllBookings = async (UserId) => {
-    const [rooms] = await db.query("SELECT * FROM bookings WHERE userid = ? ",UserId);
-    return rooms;
+    const [bookings] = await db.query(
+        `SELECT 
+            r.id,
+            r.title,
+            r.description,
+            r.address,
+            r.city,
+            r.type,
+            r.price,
+            r.preference,
+            r.ber,
+            r.images,
+            r.userId,
+            b.bookingId
+        FROM bookings b
+        INNER JOIN rooms r ON b.roomId = r.id
+        WHERE b.userId = ?`,UserId);
+    
+      return bookings;
+};
+
+const removeBooking = async (bookingId) => {
+    await db.query(
+        "DELETE FROM bookings WHERE  bookingId =? ", [parseInt(bookingId)]
+    );
 };
 
 const getBookingRequests = async (UserId) => {
@@ -70,4 +101,4 @@ const getBookingRequests = async (UserId) => {
 
 
 
-module.exports = { getAllRooms, addRoom, deleteRoom, updateRoom, getOwnerPost, getAllBookings, getBookingRequests };
+module.exports = { getAllRooms, addRoom, deleteRoom, updateRoom, getOwnerPost, getAllBookings, getBookingRequests, addBooking, removeBooking };

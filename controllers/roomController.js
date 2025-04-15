@@ -13,12 +13,12 @@ const getRooms = async (req, res) => {
 const addRoom = async (req, res) => {
 
     try {
-        const { id, title, description,address, city, type, price, preference,ber, images,userId } = req.body;
+        const {  title, description,address, city, type, price, preference,ber, images,userId } = req.body;
         // if (!fullName || !email || !password) {
         //     return res.status(400).json({ message: "Email and Password are required" });
         // }
 
-        const response = await roomService.addRoom(id, title, description,address, city, type, price, preference,ber, images,userId);
+        const response = await roomService.addRoom( title, description,address, city, type, price, preference,ber, images,userId);
         res.status(201).json(response);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -59,6 +59,27 @@ const getOwnerPost = async (req, res) => {
     }
 };
 
+const addBooking = async (req, res) => {
+    try {
+        const {  userId, roomId, fullName, emailAddress, phoneNumber, specialRequests } = req.body;
+        const response = await roomService.addBooking( userId, roomId, fullName, emailAddress, phoneNumber, specialRequests);
+        res.status(201).json(response);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+const removeBooking = async (req, res) => {
+
+    try {
+        const { bookingId } = req.params;
+        const response = await roomService.removeBooking(bookingId);
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
 const getAllBookings = async (req, res) => {
     const { userId } = req.params;
     try {
@@ -81,4 +102,4 @@ const getBookingRequests = async (req, res) => {
     }
 };
 
-module.exports = { getRooms, addRoom, deleteRoom, updateRoom,getOwnerPost,getAllBookings, getBookingRequests };
+module.exports = { getRooms, addRoom, deleteRoom, updateRoom,getOwnerPost,getAllBookings, getBookingRequests, addBooking, removeBooking };
