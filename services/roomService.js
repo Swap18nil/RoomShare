@@ -5,8 +5,11 @@ const getAllRooms = async () => {
 };
 
 const addRoom = async ( title, description,address, city, type, price, preference,ber, images,userId) =>{
-    await roomRepository.addRoom(title, description,address, city, type, price, preference,ber, images,1);
-    return { message: "Room Added Succesfully" };
+    const imagesJson = JSON.stringify(images); 
+
+    // Add the room to the database with image paths
+    await roomRepository.addRoom(title, description, address, city, type, price, preference, ber, imagesJson, userId);
+    return { message: "Room Added Successfully" };
 }
 
 const deleteRoom = async (id) =>{
@@ -39,4 +42,8 @@ const getBookingRequests = async (userId) =>{
     return await roomRepository.getBookingRequests(userId);
 }
 
-module.exports = { getAllRooms, addRoom, deleteRoom, updateRoom, getOwnerPost, getAllBookings, getBookingRequests,addBooking,removeBooking };
+const updateBookingStatus = async (bookingStatus, bookingId) =>{
+    return await roomRepository.updateBookingStatus(bookingStatus,bookingId);
+}
+
+module.exports = { getAllRooms, addRoom, deleteRoom, updateRoom, getOwnerPost, getAllBookings, getBookingRequests, addBooking, removeBooking, updateBookingStatus };

@@ -6,8 +6,9 @@ const getAllRooms = async () => {
 };
 
 const addRoom = async ( title, description,address, city, type, price, preference,ber, images,userId) => {
-    const imagesJson = JSON.stringify(images); 
+    const imagesJson = JSON.stringify(images); // Convert image paths array to JSON
 
+    // Insert room details along with image paths
     await db.query(
         "INSERT INTO rooms (title, description, address, city, type, price, preference, ber, images, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
         [title, description, address, city, type, price, preference, ber, imagesJson, userId]
@@ -91,14 +92,23 @@ const getBookingRequests = async (UserId) => {
     b.emailAddress, 
     b.phoneNumber, 
     b.specialRequests, 
-    b.bookingDate
+    b.bookingDate,
+    b.bookingStatus
     FROM bookings b
     JOIN rooms r ON b.roomId = r.id
     WHERE r.userId = ? `,UserId);
     return rooms;
 };
 
+const updateBookingStatus = async (booingId, bookingStatus)=>{
+    await db.query(
+        `UPDATE bookings 
+         SET bookingStatus = ?, 
+         WHERE bookingId = ?`, 
+        [bookingStatus, bookingId]
+    );
+}
 
 
 
-module.exports = { getAllRooms, addRoom, deleteRoom, updateRoom, getOwnerPost, getAllBookings, getBookingRequests, addBooking, removeBooking };
+module.exports = { getAllRooms, addRoom, deleteRoom, updateRoom, getOwnerPost, getAllBookings, getBookingRequests, addBooking, removeBooking, updateBookingStatus };
